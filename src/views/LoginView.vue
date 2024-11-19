@@ -6,19 +6,27 @@ import { RouterLink, useRouter } from 'vue-router'
 import ApiService from '@/service/api.service'
 import { ref } from 'vue'
 import { toast } from 'vue-sonner'
+import { routeNames } from '@/router/routes'
+import { Loader } from 'lucide-vue-next'
 
 const email = ref<string>('')
 const password = ref<string>('')
 // const pseudo = ref<string>('')
 // const pokemonId = ref<string>('')
 const error = ref<string | null>(null)
+const isLoading = ref<boolean>(false)
 const router = useRouter()
 const logIn = async () => {
-  await ApiService.auth.login(email.value, password.value).then((serverUser) => {
+  isLoading.value = true
+  await ApiService.auth.login(email.value, password.value).then(async (serverUser) => {
     toast.success('Welcome ' + serverUser.user_metadata.display_name)
     error.value = null
-    router.push({
-      name: 'home',
+    await ApiService.user.getUserById(serverUser.id).then((serverUser) => {
+      if (serverUser) localStorage.setItem('pokemonId', serverUser?.pokemon_id)
+      isLoading.value = false
+      router.push({
+        name: routeNames.Home,
+      })
     })
   })
 }
@@ -45,7 +53,12 @@ const logIn = async () => {
         </div>
       </div>
       <div class="mt-4 flex flex-col gap-2">
-        <Button @click="logIn" :disabled="!(email && password)" class="w-full">Log in </Button>
+        <Button
+          @click="logIn"
+          :disabled="!(email && password) || isLoading"
+          class="w-full flex items-center gap-2"
+          ><Loader v-if="isLoading" class="size-4 animate-spin" />Log in
+        </Button>
         <span
           >Don't have an account ?
           <RouterLink
