@@ -1,25 +1,16 @@
-import ApiService from '@/service/api.service'
-import type { User } from '@supabase/supabase-js'
+import { type UserProps } from '@/service/api.service'
 import { defineStore } from 'pinia'
 
 interface State {
-  user?: User
+  user?: UserProps
 }
 export const useUserStore = defineStore('user', {
   state: (): State => ({
     user: undefined,
   }),
   actions: {
-    setUser(user: User) {
+    setUser(user: UserProps) {
       this.user = user
-    },
-    async isLoggedIn() {
-      try {
-        this.setUser(await ApiService.user.lookup())
-        return true
-      } catch {
-        return false
-      }
     },
   },
   getters: {

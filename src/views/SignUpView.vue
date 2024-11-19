@@ -33,8 +33,8 @@ const signUp = async () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex items-center justify-center bg-primary/10">
-    <div class="border rounded-2xl w-96 h-fit p-8 bg-background">
+  <div class="size-full flex items-center justify-center">
+    <div class="rounded-2xl w-96 h-fit p-8 bg-primary-800">
       <h1 class="text-xl w-full text-center">Sign up</h1>
       <h2 class="w-5/5 leading-tight text-muted-foreground text-center">
         Embark on a journey with us, track your pokemon TCG progress and much more...
@@ -66,7 +66,10 @@ const signUp = async () => {
         </div>
       </div>
       <div class="mt-4 flex flex-col gap-2">
-        <Button @click="signUp" :disabled="!(!!email && !!password && !!pokemonId)" class="w-full"
+        <Button
+          @click="signUp"
+          :disabled="!(!!email && !!password && !!pokemonId)"
+          class="w-full bg-primary-700 hover:bg-primary-600"
           >Create an account
         </Button>
         <span
