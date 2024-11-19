@@ -1,8 +1,7 @@
 <script setup lang="ts">
+//TODO add user store to store user ID and other informations
 </script>
 
 <template>
-  <main>
-
-  </main>
+  <main>HI</main>
 </template>
