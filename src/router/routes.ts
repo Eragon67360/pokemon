@@ -5,6 +5,7 @@ export const routeNames = {
     Login: 'login',
     SignUp: 'signup',
   },
+  Loading: 'loading'
 }
 
 export const routes = [
@@ -22,5 +23,10 @@ export const routes = [
     path: '/sign-up',
     name: routeNames.Auth.SignUp,
     component: () => import('../views/SignUpView.vue'),
+  },
+  {
+    path: '/loading',
+    name: routeNames.Loading,
+    component: () => import('../views/LoadingView.vue'),
   },
 ]

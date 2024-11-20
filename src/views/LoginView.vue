@@ -31,7 +31,7 @@ const logIn = async () => {
       }
       isLoading.value = false
       router.push({
-        name: routeNames.Home,
+        name: routeNames.Loading,
       })
     })
   })

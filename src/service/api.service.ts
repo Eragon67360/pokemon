@@ -1,17 +1,27 @@
 // api.service.ts
 import { supabase } from '@/lib/supabaseClient'
+import axios from '@/config/axiosConfig'
 
 export interface UserProps {
     id: string
     pokemon_id: string
     pseudo: string
 }
-
 export interface CardProps {
     id: string
+    name: string
+}
+export interface CardsApiProps {
+    data: CardProps[]
+    page: number
+    pageSize: number
+    count: number
+    totalCount: number
+
 }
 
 export default class ApiService {
+    static BASE_URL = import.meta.env.VITE_POKEMON_TVG_API_BASE_URL
     static auth = {
         async signUp(email: string, password: string, pseudo: string) {
             const { data, error } = await supabase.auth.signUp({
@@ -80,6 +90,13 @@ export default class ApiService {
                 return null
             }
             return data as UserProps
+        },
+    }
+
+    static card = {
+        async getAll() {
+            const { data } = await axios.get<CardsApiProps>('/cards');
+            return data
         },
     }
 }
